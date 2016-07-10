@@ -147,7 +147,11 @@ fi
 # HTOP_CHECK_SCRIPT(LIBNAME, FUNCTION, DEFINE, CONFIG_SCRIPT, ELSE_PART)
 m4_define([HTOP_CHECK_SCRIPT],
 [
-   htop_config_script=$([$4] --libs 2> /dev/null)
+   if test ! -z "$htop_[$1]_config_script"; then
+      htop_config_script=$($htop_[$1]_config_script --libs 2> /dev/null)
+   else
+      htop_config_script=$([$4] --libs 2> /dev/null)
+   fi
    htop_script_success=no
    htop_save_LDFLAGS="$LDFLAGS"
    if test ! "x$htop_config_script" = x; then
